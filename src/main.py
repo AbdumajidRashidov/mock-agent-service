@@ -377,7 +377,7 @@ async def serve():
         # Create an AsyncIO gRPC server
         server = grpc.aio.server(
             options=[
-                ('grpc.max_session_memory', 2147483648 * 5) # 10GB
+                ('grpc.max_session_memory', 1073741824) # 1GB
             ]
         )
 
