@@ -1,0 +1,51 @@
+uvicorn
+requests>=2.0.0
+python-dotenv
+loguru
+logfire
+grpcio==1.74.0
+grpcio-tools==1.74.0
+psycopg2-binary
+openai
+asyncio
+dataclasses-json
+typing-extensions
+python-dateutil
+regex==2023.12.25
+tenacity==8.2.3
+protobuf>=6.31.1
+openai-agents==0.0.12
+pytest
+html2md
+aiohttp
+pydantic-ai>=0.0.18
+pydantic>=2.0.0
+langgraph
+langchain
+langchain-openai
+langchain-google-genai
+langchain-google-vertexai
+
+# Test dependencies
+pytest-asyncio>=0.21.0
+pytest-mock>=3.10.0
+pytest-cov>=4.0.0
+pytest-html>=3.1.0
+pytest-json-report>=1.5.0
+pytest-xdist>=3.0.0
+psutil>=5.9.0
+
+# Core OpenTelemetry packages
+opentelemetry-api==1.36.0
+opentelemetry-sdk==1.36.0
+
+# OpenTelemetry exporters
+opentelemetry-exporter-otlp==1.36.0
+
+# OpenTelemetry instrumentation
+opentelemetry-instrumentation==0.57b0
+opentelemetry-instrumentation-grpc==0.57b0
+
+# Google Cloud OpenTelemetry integration - using latest alpha versions
+# Note: These packages only have alpha versions available
+opentelemetry-resourcedetector-gcp==1.9.0a0

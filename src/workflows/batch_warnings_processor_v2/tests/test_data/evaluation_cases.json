@@ -1,0 +1,1738 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "last_updated": "2025-01-15",
+        "total_cases": 35,
+        "description": "Real-world evaluation test cases for Load Analysis System"
+    },
+    "test_cases": [
+        {
+            "id": "EVAL_001",
+            "name": "Acetone Material Restriction",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_001",
+                "origin_state": "TX",
+                "destination_state": "LA",
+                "origin_city": "Houston",
+                "destination_city": "New Orleans",
+                "equipment_type": "T",
+                "comments": "Acetone drums - hazmat required"
+            },
+            "truck": {
+                "id": "TRUCK_001",
+                "excluded_states": [],
+                "restrictions": ["acetone"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["acetone", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_002",
+            "name": "Alcohol Distribution Restriction",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_002",
+                "origin_state": "CA",
+                "destination_state": "NV",
+                "origin_city": "San Francisco",
+                "destination_city": "Reno",
+                "equipment_type": "V",
+                "comments": "Beer and wine distribution delivery"
+            },
+            "truck": {
+                "id": "TRUCK_002",
+                "excluded_states": [],
+                "restrictions": ["alcohol"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["alcohol", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_003",
+            "name": "Step Deck Ramp Requirement",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_003",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "SD",
+                "comments": "Heavy machinery - ramp required for loading"
+            },
+            "truck": {
+                "id": "TRUCK_003",
+                "excluded_states": [],
+                "restrictions": ["ramp required"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["ramp", "required"]
+            }
+        },
+        {
+            "id": "EVAL_004",
+            "name": "California State Exclusion",
+            "category": "location_violation",
+            "load": {
+                "id": "LOAD_004",
+                "origin_state": "CA",
+                "destination_state": "TX",
+                "origin_city": "Los Angeles",
+                "destination_city": "Houston",
+                "equipment_type": "V",
+                "comments": "Standard freight delivery"
+            },
+            "truck": {
+                "id": "TRUCK_004",
+                "excluded_states": ["CA"],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["location_exclusion"],
+                "should_contain": ["CA", "excluded"]
+            }
+        },
+        {
+            "id": "EVAL_005",
+            "name": "Specific City Exclusion",
+            "category": "location_violation",
+            "load": {
+                "id": "LOAD_005",
+                "origin_state": "NY",
+                "destination_state": "TX",
+                "origin_city": "New York",
+                "destination_city": "Houston",
+                "equipment_type": "V",
+                "comments": "General merchandise delivery"
+            },
+            "truck": {
+                "id": "TRUCK_005",
+                "excluded_states": ["New York, NY"],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["location_exclusion"],
+                "should_contain": ["New York", "excluded"]
+            }
+        },
+        {
+            "id": "EVAL_006",
+            "name": "Hazmat Permit Required",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_006",
+                "origin_state": "TX",
+                "destination_state": "LA",
+                "origin_city": "Houston",
+                "destination_city": "Baton Rouge",
+                "equipment_type": "T",
+                "comments": "Hazmat required - UN1203 gasoline"
+            },
+            "truck": {
+                "id": "TRUCK_006",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["hazmat", "permit"]
+            }
+        },
+        {
+            "id": "EVAL_007",
+            "name": "Tanker Endorsement Required",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_007",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Tulsa",
+                "equipment_type": "T",
+                "comments": "Liquid bulk cargo - food grade"
+            },
+            "truck": {
+                "id": "TRUCK_007",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["tanker", "endorsement"]
+            }
+        },
+        {
+            "id": "EVAL_008",
+            "name": "Oversize Permit Required",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_008",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "LB",
+                "comments": "Oversize load - 12ft wide, pilot car required"
+            },
+            "truck": {
+                "id": "TRUCK_008",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["oversize", "permit"]
+            }
+        },
+        {
+            "id": "EVAL_009",
+            "name": "Canada Operating Authority",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_009",
+                "origin_state": "TX",
+                "destination_state": "ON",
+                "origin_city": "Laredo",
+                "destination_city": "Toronto",
+                "equipment_type": "V",
+                "comments": "Cross border delivery to Canada"
+            },
+            "truck": {
+                "id": "TRUCK_009",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["canada", "authority"]
+            }
+        },
+        {
+            "id": "EVAL_010",
+            "name": "TSA Airport Delivery",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_010",
+                "origin_state": "CA",
+                "destination_state": "CA",
+                "origin_city": "Los Angeles",
+                "destination_city": "Los Angeles",
+                "equipment_type": "V",
+                "comments": "Airport cargo delivery - TSA clearance required"
+            },
+            "truck": {
+                "id": "TRUCK_010",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["TSA", "clearance"]
+            }
+        },
+        {
+            "id": "EVAL_011",
+            "name": "TWIC Port Delivery",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_011",
+                "origin_state": "TX",
+                "destination_state": "TX",
+                "origin_city": "Houston",
+                "destination_city": "Houston",
+                "equipment_type": "V",
+                "comments": "Port terminal delivery - TWIC card required"
+            },
+            "truck": {
+                "id": "TRUCK_011",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["TWIC", "card"]
+            }
+        },
+        {
+            "id": "EVAL_012",
+            "name": "High Value Cargo Security",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_012",
+                "origin_state": "NY",
+                "destination_state": "NY",
+                "origin_city": "New York",
+                "destination_city": "New York",
+                "equipment_type": "V",
+                "comments": "High value electronics - security escort required"
+            },
+            "truck": {
+                "id": "TRUCK_012",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["security", "high value"]
+            }
+        },
+        {
+            "id": "EVAL_013",
+            "name": "Multiple Violations Complex",
+            "category": "multiple_violations",
+            "load": {
+                "id": "LOAD_013",
+                "origin_state": "CA",
+                "destination_state": "FL",
+                "origin_city": "Los Angeles",
+                "destination_city": "Miami",
+                "equipment_type": "T",
+                "comments": "Hazmat tanker to port - TWIC and hazmat required"
+            },
+            "truck": {
+                "id": "TRUCK_013",
+                "excluded_states": ["CA", "FL"],
+                "restrictions": ["hazmat"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 3,
+                "warning_types": ["location_exclusion", "material_restriction", "permit_requirement", "security_requirement"],
+                "should_contain": ["CA", "FL", "hazmat", "TWIC"]
+            }
+        },
+        {
+            "id": "EVAL_014",
+            "name": "Clean Load Standard Freight",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_014",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "General freight, dry goods"
+            },
+            "truck": {
+                "id": "TRUCK_014",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": ["hazmat", "tanker"],
+                "security_items": ["tsa", "twic"]
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_015",
+            "name": "Clean Load With Permissions",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_015",
+                "origin_state": "TX",
+                "destination_state": "LA",
+                "origin_city": "Houston",
+                "destination_city": "Baton Rouge",
+                "equipment_type": "T",
+                "comments": "Hazmat tanker - UN1203 gasoline"
+            },
+            "truck": {
+                "id": "TRUCK_015",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": ["hazmat", "tanker"],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_016",
+            "name": "Empty Load Data Edge Case",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_016",
+                "origin_state": "",
+                "destination_state": "",
+                "origin_city": "",
+                "destination_city": "",
+                "equipment_type": "",
+                "comments": ""
+            },
+            "truck": {
+                "id": "TRUCK_016",
+                "excluded_states": ["CA", "FL"],
+                "restrictions": ["alcohol"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_017",
+            "name": "Special Characters in Comments",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_017",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "Load with special chars: @#$%^&*(){}[]|\\:;\"'<>?,./"
+            },
+            "truck": {
+                "id": "TRUCK_017",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_018",
+            "name": "Case Sensitivity Test",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_018",
+                "origin_state": "ca",
+                "destination_state": "tx",
+                "origin_city": "los angeles",
+                "destination_city": "houston",
+                "equipment_type": "v",
+                "comments": "lowercase data test"
+            },
+            "truck": {
+                "id": "TRUCK_018",
+                "excluded_states": ["CA"],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["location_exclusion"],
+                "should_contain": ["CA", "excluded"]
+            }
+        },
+        {
+            "id": "EVAL_019",
+            "name": "Mexico Cross Border",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_019",
+                "origin_state": "CA",
+                "destination_state": "BC",
+                "origin_city": "San Diego",
+                "destination_city": "Tijuana",
+                "equipment_type": "V",
+                "comments": "Mexico cross border freight"
+            },
+            "truck": {
+                "id": "TRUCK_019",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["mexico", "authority"]
+            }
+        },
+        {
+            "id": "EVAL_020",
+            "name": "Chemical Tanker Restriction",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_020",
+                "origin_state": "IL",
+                "destination_state": "WI",
+                "origin_city": "Chicago",
+                "destination_city": "Milwaukee",
+                "equipment_type": "T",
+                "comments": "Chemical tanker - industrial cleaning supplies"
+            },
+            "truck": {
+                "id": "TRUCK_020",
+                "excluded_states": [],
+                "restrictions": ["chemicals"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["chemical", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_021",
+            "name": "Both Origin and Destination Excluded",
+            "category": "location_violation",
+            "load": {
+                "id": "LOAD_021",
+                "origin_state": "CA",
+                "destination_state": "FL",
+                "origin_city": "Los Angeles",
+                "destination_city": "Miami",
+                "equipment_type": "V",
+                "comments": "Cross country general freight"
+            },
+            "truck": {
+                "id": "TRUCK_021",
+                "excluded_states": ["CA", "FL"],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["location_exclusion"],
+                "should_contain": ["CA", "FL", "excluded"]
+            }
+        },
+        {
+            "id": "EVAL_022",
+            "name": "Double Trailer Configuration",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_022",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V2",
+                "comments": "Double trailer configuration - team drivers"
+            },
+            "truck": {
+                "id": "TRUCK_022",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["double", "trailer"]
+            }
+        },
+        {
+            "id": "EVAL_023",
+            "name": "Military Base Delivery",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_023",
+                "origin_state": "VA",
+                "destination_state": "VA",
+                "origin_city": "Norfolk",
+                "destination_city": "Norfolk",
+                "equipment_type": "V",
+                "comments": "Military base delivery - security clearance needed"
+            },
+            "truck": {
+                "id": "TRUCK_023",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["military", "security"]
+            }
+        },
+        {
+            "id": "EVAL_024",
+            "name": "Hazardous Waste Disposal",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_024",
+                "origin_state": "TX",
+                "destination_state": "NM",
+                "origin_city": "Houston",
+                "destination_city": "Albuquerque",
+                "equipment_type": "V",
+                "comments": "Hazardous waste disposal - EPA regulated"
+            },
+            "truck": {
+                "id": "TRUCK_024",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["hazardous", "waste"]
+            }
+        },
+        {
+            "id": "EVAL_025",
+            "name": "Fully Certified Truck Clean Load",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_025",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Tulsa",
+                "equipment_type": "T",
+                "comments": "Hazmat tanker with all permits - UN1203 gasoline"
+            },
+            "truck": {
+                "id": "TRUCK_025",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": ["hazmat", "tanker", "oversize", "canada", "mexico"],
+                "security_items": ["tsa", "twic", "heavy_duty_lock"]
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_026",
+            "name": "Explosive Materials Transport",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_026",
+                "origin_state": "TX",
+                "destination_state": "NM",
+                "origin_city": "El Paso",
+                "destination_city": "Albuquerque",
+                "equipment_type": "V",
+                "comments": "Fireworks and pyrotechnics - Class 1 explosives, DOT regulated"
+            },
+            "truck": {
+                "id": "TRUCK_026",
+                "excluded_states": [],
+                "restrictions": ["explosives", "fireworks"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["explosives", "fireworks", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_027",
+            "name": "Tobacco Products Restriction",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_027",
+                "origin_state": "NC",
+                "destination_state": "VA",
+                "origin_city": "Durham",
+                "destination_city": "Richmond",
+                "equipment_type": "V",
+                "comments": "Cigarettes and tobacco products - ATF regulated shipment"
+            },
+            "truck": {
+                "id": "TRUCK_027",
+                "excluded_states": [],
+                "restrictions": ["tobacco", "cigarettes"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["tobacco", "cigarettes", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_028",
+            "name": "Radioactive Medical Isotopes",
+            "category": "multiple_violations",
+            "load": {
+                "id": "LOAD_028",
+                "origin_state": "TN",
+                "destination_state": "GA",
+                "origin_city": "Oak Ridge",
+                "destination_city": "Atlanta",
+                "equipment_type": "V",
+                "comments": "Radioactive medical isotopes - Class 7 hazmat, requires special handling"
+            },
+            "truck": {
+                "id": "TRUCK_028",
+                "excluded_states": [],
+                "restrictions": ["radioactive"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 2,
+                "warning_types": ["material_restriction", "permit_requirement"],
+                "should_contain": ["radioactive", "hazmat", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_029",
+            "name": "Stepdeck Conestoga Ramp Not Needed",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_029",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "SN",
+                "comments": "Machinery transport - ramps not needed, crane loading"
+            },
+            "truck": {
+                "id": "TRUCK_029",
+                "excluded_states": [],
+                "restrictions": ["ramp required"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_030",
+            "name": "Dry Bulk Pneumatic Hazmat",
+            "category": "multiple_violations",
+            "load": {
+                "id": "LOAD_030",
+                "origin_state": "LA",
+                "destination_state": "TX",
+                "origin_city": "Baton Rouge",
+                "destination_city": "Houston",
+                "equipment_type": "NU",
+                "comments": "Dry bulk chemicals - pneumatic unloading, hazmat class 8"
+            },
+            "truck": {
+                "id": "TRUCK_030",
+                "excluded_states": [],
+                "restrictions": ["chemicals"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 2,
+                "warning_types": ["material_restriction", "permit_requirement"],
+                "should_contain": ["chemicals", "hazmat", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_031",
+            "name": "Auto Carrier Multi-State Exclusion",
+            "category": "location_violation",
+            "load": {
+                "id": "LOAD_031",
+                "origin_state": "MI",
+                "destination_state": "FL",
+                "origin_city": "Detroit",
+                "destination_city": "Tampa",
+                "equipment_type": "AC",
+                "comments": "New vehicle transport - 9 cars, dealer delivery"
+            },
+            "truck": {
+                "id": "TRUCK_031",
+                "excluded_states": ["FL", "GA", "SC"],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["location_exclusion"],
+                "should_contain": ["FL", "excluded"]
+            }
+        },
+        {
+            "id": "EVAL_032",
+            "name": "Removable Gooseneck Heavy Haul",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_032",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Tulsa",
+                "equipment_type": "RG",
+                "comments": "Heavy industrial equipment - 85,000 lbs, requires overweight permit"
+            },
+            "truck": {
+                "id": "TRUCK_032",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["overweight", "permit", "heavy"]
+            }
+        },
+        {
+            "id": "EVAL_033",
+            "name": "Hopper Bottom Grain Transport",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_033",
+                "origin_state": "NE",
+                "destination_state": "KS",
+                "origin_city": "Omaha",
+                "destination_city": "Wichita",
+                "equipment_type": "HB",
+                "comments": "Grain transport - corn, standard agricultural commodity"
+            },
+            "truck": {
+                "id": "TRUCK_033",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_034",
+            "name": "Conveyor Belt System Oversize",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_034",
+                "origin_state": "OH",
+                "destination_state": "IN",
+                "origin_city": "Cincinnati",
+                "destination_city": "Indianapolis",
+                "equipment_type": "CV",
+                "comments": "Mining conveyor system - 11.5 ft wide, requires pilot car"
+            },
+            "truck": {
+                "id": "TRUCK_034",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["oversize", "wide", "pilot"]
+            }
+        },
+        {
+            "id": "EVAL_035",
+            "name": "Power Only No Trailer Issues",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_035",
+                "origin_state": "TX",
+                "destination_state": "LA",
+                "origin_city": "Dallas",
+                "destination_city": "Shreveport",
+                "equipment_type": "PO",
+                "comments": "Power only - customer provides trailer, general freight"
+            },
+            "truck": {
+                "id": "TRUCK_035",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_036",
+            "name": "Flammable Liquids Class 3",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_036",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "T",
+                "comments": "Paint and solvents - Class 3 flammable liquids, UN1263"
+            },
+            "truck": {
+                "id": "TRUCK_036",
+                "excluded_states": [],
+                "restrictions": ["flammable"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["flammable", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_037",
+            "name": "Insulated Container Pharmaceuticals",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_037",
+                "origin_state": "NJ",
+                "destination_state": "FL",
+                "origin_city": "Newark",
+                "destination_city": "Jacksonville",
+                "equipment_type": "CI",
+                "comments": "High-value pharmaceuticals - theft target, requires security escort"
+            },
+            "truck": {
+                "id": "TRUCK_037",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["security", "theft", "escort"]
+            }
+        },
+        {
+            "id": "EVAL_038",
+            "name": "Triple Trailer Configuration",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_038",
+                "origin_state": "NV",
+                "destination_state": "UT",
+                "origin_city": "Las Vegas",
+                "destination_city": "Salt Lake City",
+                "equipment_type": "V3",
+                "comments": "Triple trailer configuration - requires special endorsement"
+            },
+            "truck": {
+                "id": "TRUCK_038",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["triple", "endorsement"]
+            }
+        },
+        {
+            "id": "EVAL_039",
+            "name": "Moving Van Household Goods",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_039",
+                "origin_state": "CA",
+                "destination_state": "TX",
+                "origin_city": "Sacramento",
+                "destination_city": "Austin",
+                "equipment_type": "MV",
+                "comments": "Household goods relocation - residential move, standard furniture"
+            },
+            "truck": {
+                "id": "TRUCK_039",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_040",
+            "name": "Corrosive Chemicals Class 8",
+            "category": "multiple_violations",
+            "load": {
+                "id": "LOAD_040",
+                "origin_state": "CA",
+                "destination_state": "NV",
+                "origin_city": "Los Angeles",
+                "destination_city": "Las Vegas",
+                "equipment_type": "T",
+                "comments": "Sulfuric acid - Class 8 corrosive, UN1830, requires hazmat endorsement"
+            },
+            "truck": {
+                "id": "TRUCK_040",
+                "excluded_states": ["CA"],
+                "restrictions": ["corrosive", "acids"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 3,
+                "warning_types": ["location_exclusion", "material_restriction", "permit_requirement"],
+                "should_contain": ["CA", "excluded", "corrosive", "acids", "hazmat"]
+            }
+        },
+        {
+            "id": "EVAL_041",
+            "name": "Intermodal Container Port to Rail",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_041",
+                "origin_state": "CA",
+                "destination_state": "CA",
+                "origin_city": "Long Beach",
+                "destination_city": "Los Angeles",
+                "equipment_type": "C",
+                "comments": "Container drayage - port to rail yard, TWIC required"
+            },
+            "truck": {
+                "id": "TRUCK_041",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["TWIC", "port"]
+            }
+        },
+        {
+            "id": "EVAL_042",
+            "name": "Stretch Trailer Lumber",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_042",
+                "origin_state": "OR",
+                "destination_state": "CA",
+                "origin_city": "Portland",
+                "destination_city": "Sacramento",
+                "equipment_type": "ST",
+                "comments": "Lumber and building materials - 60ft stretch trailer"
+            },
+            "truck": {
+                "id": "TRUCK_042",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_043",
+            "name": "Vented Van Produce with Restrictions",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_043",
+                "origin_state": "CA",
+                "destination_state": "NV",
+                "origin_city": "Salinas",
+                "destination_city": "Reno",
+                "equipment_type": "VV",
+                "comments": "Organic produce - pesticide-free, requires special handling"
+            },
+            "truck": {
+                "id": "TRUCK_043",
+                "excluded_states": [],
+                "restrictions": ["organic", "pesticide-free"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["organic", "pesticide", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_044",
+            "name": "Dump Trailer Construction Materials",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_044",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Fort Worth",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "DT",
+                "comments": "Sand and gravel - construction materials, standard dump load"
+            },
+            "truck": {
+                "id": "TRUCK_044",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_045",
+            "name": "Blanket Wrap Electronics",
+            "category": "security_violation",
+            "load": {
+                "id": "LOAD_045",
+                "origin_state": "TX",
+                "destination_state": "CA",
+                "origin_city": "Austin",
+                "destination_city": "San Jose",
+                "equipment_type": "VW",
+                "comments": "High-end electronics - servers and networking equipment, theft target"
+            },
+            "truck": {
+                "id": "TRUCK_045",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["electronics", "theft", "security"]
+            }
+        },
+        {
+            "id": "EVAL_046",
+            "name": "Landoll Drop Deck Military Equipment",
+            "category": "multiple_violations",
+            "load": {
+                "id": "LOAD_046",
+                "origin_state": "TX",
+                "destination_state": "GA",
+                "origin_city": "Fort Hood",
+                "destination_city": "Fort Benning",
+                "equipment_type": "LA",
+                "comments": "Military vehicle - armored personnel carrier, requires security clearance and oversize permit"
+            },
+            "truck": {
+                "id": "TRUCK_046",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 2,
+                "warning_types": ["permit_requirement", "security_requirement"],
+                "should_contain": ["oversize", "security", "military"]
+            }
+        },
+        {
+            "id": "EVAL_047",
+            "name": "Tanker Steel Caustic Soda",
+            "category": "material_violation",
+            "load": {
+                "id": "LOAD_047",
+                "origin_state": "LA",
+                "destination_state": "TX",
+                "origin_city": "Lake Charles",
+                "destination_city": "Beaumont",
+                "equipment_type": "TS",
+                "comments": "Caustic soda - sodium hydroxide, Class 8 corrosive"
+            },
+            "truck": {
+                "id": "TRUCK_047",
+                "excluded_states": [],
+                "restrictions": ["caustic", "sodium hydroxide"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["caustic", "sodium hydroxide", "restricted"]
+            }
+        },
+        {
+            "id": "EVAL_048",
+            "name": "Roller Bed Printing Equipment",
+            "category": "clean_case",
+            "load": {
+                "id": "LOAD_048",
+                "origin_state": "IL",
+                "destination_state": "WI",
+                "origin_city": "Chicago",
+                "destination_city": "Milwaukee",
+                "equipment_type": "VB",
+                "comments": "Printing press equipment - roller bed loading, standard machinery"
+            },
+            "truck": {
+                "id": "TRUCK_048",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_049",
+            "name": "International Canada Food Products",
+            "category": "permit_violation",
+            "load": {
+                "id": "LOAD_049",
+                "origin_state": "WA",
+                "destination_state": "BC",
+                "origin_city": "Seattle",
+                "destination_city": "Vancouver",
+                "equipment_type": "R",
+                "comments": "Frozen food products - cross border delivery to Canada"
+            },
+            "truck": {
+                "id": "TRUCK_049",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["canada", "authority", "cross border"]
+            }
+        },
+        {
+            "id": "EVAL_051",
+            "name": "Very Long Load Comments",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_051",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "This is an extremely long load comment that contains multiple sentences and various details about the shipment including specific handling instructions, delivery requirements, contact information, special notes about the cargo, packaging specifications, temperature requirements, time constraints, route preferences, and other miscellaneous information that might be included in a real-world scenario to test how the system handles very verbose load descriptions that exceed normal length expectations and contain multiple keywords and phrases that could potentially trigger various filters and analysis components within the load matching system."
+            },
+            "truck": {
+                "id": "TRUCK_051",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_052",
+            "name": "Unicode Characters in Data",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_052",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "Café equipment delivery - résumé printing supplies, naïve implementation test with éxotic characters"
+            },
+            "truck": {
+                "id": "TRUCK_052",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_053",
+            "name": "Multiple Equipment Types Mixed",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_053",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V,F,R",
+                "comments": "Multiple equipment types acceptable - van, flatbed, or reefer"
+            },
+            "truck": {
+                "id": "TRUCK_053",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_054",
+            "name": "Load with Contradictory Requirements",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_054",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "No hazmat required - general freight only, definitely not hazmat, no special permits needed"
+            },
+            "truck": {
+                "id": "TRUCK_054",
+                "excluded_states": [],
+                "restrictions": ["hazmat"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "EVAL_055",
+            "name": "Load with Ambiguous Material Description",
+            "category": "edge_case",
+            "load": {
+                "id": "LOAD_055",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Dallas",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "V",
+                "comments": "Miscellaneous items - various products, some chemicals possible"
+            },
+            "truck": {
+                "id": "TRUCK_055",
+                "excluded_states": [],
+                "restrictions": ["chemicals"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["chemicals", "restricted"]
+            }
+        },
+        {
+            "id": "CUSTOM_001",
+            "name": "Wine Distribution to Restricted State",
+            "category": "material_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_001",
+                "origin_state": "CA",
+                "destination_state": "TX",
+                "origin_city": "Napa",
+                "destination_city": "Austin",
+                "equipment_type": "V",
+                "comments": "Premium wine collection - temperature controlled delivery"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_001",
+                "excluded_states": [],
+                "restrictions": ["alcohol", "wine"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["wine", "alcohol", "restricted"]
+            }
+        },
+        {
+            "id": "CUSTOM_002",
+            "name": "Pharmaceutical Cold Chain Delivery",
+            "category": "multiple_violations",
+            "load": {
+                "id": "CUSTOM_LOAD_002",
+                "origin_state": "NJ",
+                "destination_state": "FL",
+                "origin_city": "Newark",
+                "destination_city": "Miami",
+                "equipment_type": "R",
+                "comments": "Pharmaceutical products - temperature sensitive, requires FDA compliance and special handling"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_002",
+                "excluded_states": ["FL"],
+                "restrictions": ["pharmaceuticals"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 2,
+                "warning_types": ["location_exclusion", "material_restriction"],
+                "should_contain": ["FL", "excluded", "pharmaceutical", "restricted"]
+            }
+        },
+        {
+            "id": "CUSTOM_003",
+            "name": "Oversized Wind Turbine Blade",
+            "category": "permit_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_003",
+                "origin_state": "TX",
+                "destination_state": "KS",
+                "origin_city": "Amarillo",
+                "destination_city": "Dodge City",
+                "equipment_type": "LB",
+                "comments": "Wind turbine blade - 150ft long, requires pilot cars and route planning"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_003",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["oversize", "permit", "pilot"]
+            }
+        },
+        {
+            "id": "CUSTOM_004",
+            "name": "Government Facility Delivery with Security",
+            "category": "security_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_004",
+                "origin_state": "VA",
+                "destination_state": "MD",
+                "origin_city": "Richmond",
+                "destination_city": "Baltimore",
+                "equipment_type": "V",
+                "comments": "Government contract delivery - requires security clearance and background check"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_004",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["security", "clearance", "government"]
+            }
+        },
+        {
+            "id": "CUSTOM_005",
+            "name": "Tesla Vehicle Transport",
+            "category": "clean_case",
+            "load": {
+                "id": "CUSTOM_LOAD_005",
+                "origin_state": "CA",
+                "destination_state": "TX",
+                "origin_city": "Fremont",
+                "destination_city": "Austin",
+                "equipment_type": "AC",
+                "comments": "Tesla vehicle transport - 8 cars, standard auto carrier"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_005",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": ["auto_carrier"],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "CUSTOM_006",
+            "name": "Craft Beer Distribution Network",
+            "category": "material_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_006",
+                "origin_state": "CO",
+                "destination_state": "WY",
+                "origin_city": "Denver",
+                "destination_city": "Cheyenne",
+                "equipment_type": "V",
+                "comments": "Craft beer delivery - local brewery distribution, refrigerated"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_006",
+                "excluded_states": [],
+                "restrictions": ["alcohol", "beer"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["material_restriction"],
+                "should_contain": ["beer", "alcohol", "restricted"]
+            }
+        },
+        {
+            "id": "CUSTOM_007",
+            "name": "Clean Energy Battery Storage",
+            "category": "multiple_violations",
+            "load": {
+                "id": "CUSTOM_LOAD_007",
+                "origin_state": "NV",
+                "destination_state": "CA",
+                "origin_city": "Las Vegas",
+                "destination_city": "Los Angeles",
+                "equipment_type": "F",
+                "comments": "Lithium battery storage units - hazmat class 9, requires hazmat endorsement"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_007",
+                "excluded_states": ["CA"],
+                "restrictions": ["lithium", "batteries"],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 3,
+                "warning_types": ["location_exclusion", "material_restriction", "permit_requirement"],
+                "should_contain": ["CA", "excluded", "lithium", "batteries", "hazmat"]
+            }
+        },
+        {
+            "id": "CUSTOM_008",
+            "name": "Food Grade Stainless Steel Tanker",
+            "category": "clean_case",
+            "load": {
+                "id": "CUSTOM_LOAD_008",
+                "origin_state": "WI",
+                "destination_state": "IL",
+                "origin_city": "Milwaukee",
+                "destination_city": "Chicago",
+                "equipment_type": "T",
+                "comments": "Food grade liquid transport - sanitized tanker, dairy products"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_008",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": ["tanker", "food_grade"],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": false,
+                "warning_count": 0,
+                "warning_types": [],
+                "should_contain": []
+            }
+        },
+        {
+            "id": "CUSTOM_009",
+            "name": "Construction Equipment with Fuel",
+            "category": "permit_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_009",
+                "origin_state": "TX",
+                "destination_state": "OK",
+                "origin_city": "Houston",
+                "destination_city": "Oklahoma City",
+                "equipment_type": "LB",
+                "comments": "Excavator with fuel tank - construction equipment, diesel fuel onboard"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_009",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["permit_requirement"],
+                "should_contain": ["fuel", "diesel", "hazmat"]
+            }
+        },
+        {
+            "id": "CUSTOM_010",
+            "name": "Art Gallery Shipment High Value",
+            "category": "security_violation",
+            "load": {
+                "id": "CUSTOM_LOAD_010",
+                "origin_state": "NY",
+                "destination_state": "CA",
+                "origin_city": "New York",
+                "destination_city": "San Francisco",
+                "equipment_type": "V",
+                "comments": "Fine art shipment - museum quality pieces, high value, requires white glove service"
+            },
+            "truck": {
+                "id": "CUSTOM_TRUCK_010",
+                "excluded_states": [],
+                "restrictions": [],
+                "permitted_items": [],
+                "security_items": []
+            },
+            "expected_outcome": {
+                "has_issues": true,
+                "warning_count": 1,
+                "warning_types": ["security_requirement"],
+                "should_contain": ["high value", "security", "art"]
+            }
+        }
+    ]
+}

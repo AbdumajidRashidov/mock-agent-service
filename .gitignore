@@ -1,0 +1,17 @@
+.venv
+venv
+__pycache__
+.env
+.env.example
+*.egg
+*.egg-info
+*.spec
+*.mo
+*.pot
+*.log
+*.db
+*.sqlite
+*.db-journal
+*.py[co]
+__pycache__/
+

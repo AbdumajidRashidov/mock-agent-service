@@ -1,0 +1,1242 @@
+{
+    "test_cases": [
+        {
+            "test_name": "spot_order_with_rate",
+            "input": {
+                "subject": "Freight opportunity: Chicago to New York",
+                "body": "We have a load that needs to be picked up from Chicago, IL and delivered to New York, NY. Rate: $1500. Please let me know if you're interested.\n\nThanks,\nJohn Doe\nABC Logistics\nMC# 123456\nPhone: +1-555-123-4567\nEmail: john.doe@abclogistics.com\nWebsite: www.abclogistics.com",
+                "threadId": "thread_001"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Chicago, IL",
+                        "delivery": "New York, NY",
+                        "route": "Chicago, IL → New York, NY",
+                        "offeringRate": 1500.0,
+                        "threadId": "thread_001"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "123456",
+                    "fullName": "John Doe",
+                    "companyName": "ABC Logistics",
+                    "email": "john.doe@abclogistics.com",
+                    "phone": "+1-555-123-4567",
+                    "website": "www.abclogistics.com"
+                },
+                "threadId": "thread_001",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_order_without_rate",
+            "input": {
+                "subject": "Load Available - Dallas to Miami",
+                "body": "Hi there,\n\nI have a load available for pickup in Dallas, TX with delivery to Miami, FL. Need ASAP.\n\nContact:\nMary Smith\nXYZ Freight\nMC: 789012\nmary@xyzfreight.com\n(555) 987-6543",
+                "threadId": "thread_002"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Dallas, TX",
+                        "delivery": "Miami, FL",
+                        "route": "Dallas, TX → Miami, FL",
+                        "threadId": "thread_002"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "789012",
+                    "fullName": "Mary Smith",
+                    "companyName": "XYZ Freight",
+                    "email": "mary@xyzfreight.com",
+                    "phone": "(555) 987-6543"
+                },
+                "threadId": "thread_002",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_order_recurring",
+            "input": {
+                "subject": "Weekly Lane Opportunity - Los Angeles to Phoenix",
+                "body": "We have a weekly lane starting next Monday. \n\nRoute: Los Angeles, CA to Phoenix, AZ\nFrequency: Every Monday for 3 months\nRate: $800 per load\n\nInterested carriers please contact:\nBob Johnson\nFreight Masters LLC\nMC#: 456789\nbob.johnson@freightmasters.com\nPhone: 555-111-2222\nWebsite: https://freightmasters.com",
+                "threadId": "thread_003"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Los Angeles, CA",
+                        "delivery": "Phoenix, AZ",
+                        "route": "Los Angeles, CA → Phoenix, AZ",
+                        "offeringRate": 800.0,
+                        "threadId": "thread_003"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "456789",
+                    "fullName": "Bob Johnson",
+                    "companyName": "Freight Masters LLC",
+                    "email": "bob.johnson@freightmasters.com",
+                    "phone": "555-111-2222",
+                    "website": "https://freightmasters.com"
+                },
+                "threadId": "thread_003",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "multiple_deliveries_spot",
+            "input": {
+                "subject": "Multi-drop load - Atlanta to multiple destinations",
+                "body": "Load needs pickup from Atlanta, GA with deliveries to:\n1. Jacksonville, FL - $500\n2. Tampa, FL - $600\n\nTotal: $1100\n\nContact: Sarah Wilson\nLogistics Pro\nMC: 321654\nsarah@logisticspro.com\n555-333-4444",
+                "threadId": "thread_004"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Atlanta, GA",
+                        "delivery": "Jacksonville, FL",
+                        "route": "Atlanta, GA → Jacksonville, FL",
+                        "offeringRate": 500.0,
+                        "threadId": "thread_004"
+                    },
+                    {
+                        "pickup": "Atlanta, GA",
+                        "delivery": "Tampa, FL",
+                        "route": "Atlanta, GA → Tampa, FL",
+                        "offeringRate": 600.0,
+                        "threadId": "thread_004"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "321654",
+                    "fullName": "Sarah Wilson",
+                    "companyName": "Logistics Pro",
+                    "email": "sarah@logisticspro.com",
+                    "phone": "555-333-4444"
+                },
+                "threadId": "thread_004",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "html_formatted_email",
+            "input": {
+                "subject": "Load Posting - Seattle to Denver",
+                "body": "<html><body><p>We have a <strong>urgent load</strong> available:</p><ul><li>Pickup: Seattle, WA</li><li>Delivery: Denver, CO</li><li>Rate: $1200</li></ul><p>Contact information:</p><table><tr><td>Name:</td><td>Mike Davis</td></tr><tr><td>Company:</td><td>Rocky Mountain Freight</td></tr><tr><td>MC:</td><td>987654</td></tr><tr><td>Email:</td><td>mike@rmfreight.com</td></tr></table></body></html>",
+                "threadId": "thread_005"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Seattle, WA",
+                        "delivery": "Denver, CO",
+                        "route": "Seattle, WA → Denver, CO",
+                        "offeringRate": 1200.0,
+                        "threadId": "thread_005"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "987654",
+                    "fullName": "Mike Davis",
+                    "companyName": "Rocky Mountain Freight",
+                    "email": "mike@rmfreight.com"
+                },
+                "threadId": "thread_005",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "missing_pickup_location",
+            "input": {
+                "subject": "Delivery needed to Boston",
+                "body": "Need delivery to Boston, MA. Rate: $900.\n\nContact: Lisa Chen\nQuick Logistics\nMC: 147258\nlisa@quicklogistics.com",
+                "threadId": "thread_006"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "Couldn't extract locations",
+                "orders": [],
+                "broker": {
+                    "mcNumber": "147258",
+                    "fullName": "Lisa Chen",
+                    "companyName": "Quick Logistics",
+                    "email": "lisa@quicklogistics.com"
+                },
+                "threadId": "thread_006",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "missing_delivery_location",
+            "input": {
+                "subject": "Pickup available in Houston",
+                "body": "Load ready for pickup in Houston, TX. Rate negotiable.\n\nTom Rodriguez\nStar Transport\nMC: 852963\ntom@startransport.com\n555-777-8888",
+                "threadId": "thread_007"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "Couldn't extract locations",
+                "orders": [],
+                "broker": {
+                    "mcNumber": "852963",
+                    "fullName": "Tom Rodriguez",
+                    "companyName": "Star Transport",
+                    "email": "tom@startransport.com",
+                    "phone": "555-777-8888"
+                },
+                "threadId": "thread_007",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "non_logistics_marketing_email",
+            "input": {
+                "subject": "Special Offer: 50% Off Office Supplies",
+                "body": "Dear Customer,\n\nWe're excited to offer you 50% off all office supplies this month! From pens and paper to desks and chairs, we have everything you need for your office.\n\nVisit our website: www.officesupplies.com\nCall us: 1-800-OFFICE\n\nBest regards,\nOffice Supplies Team",
+                "threadId": "thread_008"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "threadId": "thread_008",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "personal_email",
+            "input": {
+                "subject": "Dinner plans for tonight",
+                "body": "Hey! Are we still on for dinner tonight at 7pm? I made reservations at that Italian place we talked about.\n\nLet me know!\nSarah",
+                "threadId": "thread_009"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "threadId": "thread_009",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "minimal_broker_info",
+            "input": {
+                "subject": "Load: Portland to Sacramento",
+                "body": "Load available Portland, OR to Sacramento, CA. $950.\n\nCall Jim at 555-999-0000",
+                "threadId": "thread_010"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Portland, OR",
+                        "delivery": "Sacramento, CA",
+                        "route": "Portland, OR → Sacramento, CA",
+                        "offeringRate": 950.0,
+                        "threadId": "thread_010"
+                    }
+                ],
+                "broker": {
+                    "fullName": "Jim",
+                    "phone": "555-999-0000"
+                },
+                "threadId": "thread_010",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_spot_combination",
+            "input": {
+                "subject": "Mixed Opportunities - Spot and Lane Available",
+                "body": "We have both immediate and ongoing opportunities:\n\n1. SPOT LOAD: Nashville, TN to Birmingham, AL - $600 - needed today\n2. LANE: Weekly runs from Memphis, TN to Little Rock, AR - $500/week starting Monday\n\nContact:\nDavid Brown\nSouthern Logistics\nMC: 135792\ndavid@southernlogistics.com\n555-246-8135",
+                "threadId": "thread_011"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Nashville, TN",
+                        "delivery": "Birmingham, AL",
+                        "route": "Nashville, TN → Birmingham, AL",
+                        "offeringRate": 600.0,
+                        "threadId": "thread_011"
+                    },
+                    {
+                        "pickup": "Memphis, TN",
+                        "delivery": "Little Rock, AR",
+                        "route": "Memphis, TN → Little Rock, AR",
+                        "offeringRate": 500.0,
+                        "threadId": "thread_011"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "135792",
+                    "fullName": "David Brown",
+                    "companyName": "Southern Logistics",
+                    "email": "david@southernlogistics.com",
+                    "phone": "555-246-8135"
+                },
+                "threadId": "thread_011",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "ambiguous_locations",
+            "input": {
+                "subject": "Load from somewhere in California",
+                "body": "Need pickup somewhere in Northern California area and delivery to Texas region. Rate TBD.\n\nContact: Amy Wilson\nFreight Solutions\namy@freightsolutions.com",
+                "threadId": "thread_012"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "Couldn't extract locations",
+                "orders": [],
+                "broker": {
+                    "fullName": "Amy Wilson",
+                    "companyName": "Freight Solutions",
+                    "email": "amy@freightsolutions.com"
+                },
+                "threadId": "thread_012",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "empty_email_body",
+            "input": {
+                "subject": "Load Available",
+                "body": "",
+                "threadId": "thread_013"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "threadId": "thread_013",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "rate_without_currency_symbol",
+            "input": {
+                "subject": "Phoenix to Las Vegas Load",
+                "body": "Load available from Phoenix, AZ to Las Vegas, NV. Rate 750.\n\nContact Info:\nRick Martinez\nDesert Freight Co\nMC Number: 246810\nrick.martinez@desertfreight.com\nPhone: 555-135-7924",
+                "threadId": "thread_014"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Las Vegas, NV",
+                        "route": "Phoenix, AZ → Las Vegas, NV",
+                        "offeringRate": 750.0,
+                        "threadId": "thread_014"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "246810",
+                    "fullName": "Rick Martinez",
+                    "companyName": "Desert Freight Co",
+                    "email": "rick.martinez@desertfreight.com",
+                    "phone": "555-135-7924"
+                },
+                "threadId": "thread_014",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "van_needed_springfield_to_henderson",
+            "input": {
+                "subject": "Van needed",
+                "body": "Hello! We have the following load that needs coverage. Please let us know if you are available Origin: SPRINGFIELD MA 01108 Pickup Window: 07/08 8:00 AM - 07/08 (EST) Destination: HENDERSON KY 42420",
+                "threadId": "thread_015"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Springfield, MA",
+                        "delivery": "Henderson, KY",
+                        "route": "Springfield, MA → Henderson, KY",
+                        "threadId": "thread_015"
+                    }
+                ],
+                "broker": {},
+                "threadId": "thread_015",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "dallas_to_mesquite_recurring",
+            "input": {
+                "subject": "Dallas, TX to Mesquite, TX (7x a week).pdf",
+                "body": "Good morning, Dry Van Legal Weight Monday - Sunday (7 days a week) Picks up every morning at 09:00am in Dallas, TX Delivers straight through same day to Mesquite, TX Let me know if you are interested!",
+                "threadId": "thread_016"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Dallas, TX",
+                        "delivery": "Mesquite, TX",
+                        "route": "Dallas, TX → Mesquite, TX",
+                        "threadId": "thread_016"
+                    }
+                ],
+                "broker": {
+                    "companyName": "",
+                    "email": ""
+                },
+                "threadId": "thread_016",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "greensboro_to_pittsburg_van",
+            "input": {
+                "subject": "Greensboro NC to Pittsburg PA VAN Pick up today 1400.pdf",
+                "body": "Hello Valued Carrier, Can you help with this load? Dry Van Pick up today 14:00 Deliver tomorrow 08:00 FAK Thank You, Greg Phairas | Director of Business Development T: (800) 659-1117 x1854 | C: (336) 430-6876 | greg.phairas@epeslogistics.com",
+                "threadId": "thread_017"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Greensboro NC",
+                        "delivery": "Pittsburg PA",
+                        "route": "Greensboro NC → Pittsburg PA",
+                        "threadId": "thread_017"
+                    }
+                ],
+                "broker": {
+                    "companyName": "Epes logistics",
+                    "email": "greg.phairas@epeslogistics.com"
+                },
+                "threadId": "thread_017",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "nj_to_in_load_offer",
+            "input": {
+                "subject": "2025-07-07-NJ - IN LOAD OFFER.pdf",
+                "body": "Hello! We have the following load that needs coverage. Please let us know if you are available Origin: SAYREVILLE NJ 08872 Pickup Window: 07/08 10:30 AM - 07/08 10:30 AM (EST) Destination: SEYMOUR IN | PLS Logistics rmyhalyk@plslogistics.com",
+                "threadId": "thread_018"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "SAYREVILLE NJ",
+                        "delivery": "SEYMOUR IN",
+                        "route": "SAYREVILLE NJ → SEYMOUR IN",
+                        "threadId": "thread_018"
+                    }
+                ],
+                "broker": {
+                    "companyName": "PLS Logistics",
+                    "email": "rmyhalyk@plslogistics.com"
+                },
+                "threadId": "thread_018",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "ridgeway_va_to_mo_van",
+            "input": {
+                "subject": "Ridgeway, VA - MO - 53 FT PLATED VAN",
+                "body": "Morning team, any cap here? Origin: SHIP 07/07 1500 07/07/2025 - CROWN CORK & SEAL USA, INC., RIDGEWAY, VA Destination: DUE 07/08 1800 07/08/2025 - REFRESCO - MARYLAND HEIGHTS, MARYLAND HEIGHTS, MO",
+                "threadId": "thread_019"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Ridgeway, VA",
+                        "delivery": "Maryland Heights, MO",
+                        "route": "Ridgeway, VA → Maryland Heights, MO",
+                        "threadId": "thread_019"
+                    }
+                ],
+                "broker": {
+                    "email": ""
+                },
+                "threadId": "thread_019",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "sidney_oh_to_mukwonago_wi",
+            "input": {
+                "subject": "Sidney, OH → Mukwonago, WI (Reference ID: 51K2925)",
+                "body": "Do you have a truck? Thank you Justin Jones Sales 08:00 am to 17:00 pm CST (479)820-2159 (Team Number) All SPOT loads are subject to the Quick Rate Terms and Conditions. JB Hunt Customer Satisfaction",
+                "threadId": "thread_020"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Sidney, OH",
+                        "delivery": "Mukwonago, WI",
+                        "route": "Sidney, OH → Mukwonago, WI",
+                        "threadId": "thread_020"
+                    }
+                ],
+                "broker": {
+                    "email": ""
+                },
+                "threadId": "thread_020",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "breinigsville_to_sturtevant",
+            "input": {
+                "subject": "BREINIGSVILLE, PA to STURTEVANT, WI for Today 7/7",
+                "body": "Good morning, Please let me know if interested in the below load for 53ft dry van: Pick- Breinigsville, PA Today 7/7 @1600 Delv- Sturtevant, WI Next Day 7/8 @2300 45k Lbs palletized water $1100 James \n \ndispatchteam@prosportinc.com",
+                "threadId": "thread_021"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Breinigsville, PA",
+                        "delivery": "Sturtevant, WI",
+                        "route": "Breinigsville, PA → Sturtevant, WI",
+                        "threadId": "thread_021"
+                    }
+                ],
+                "broker": {
+                    "email": "dispatchteam@prosportinc.com"
+                },
+                "threadId": "thread_021",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "il_to_md_next_day",
+            "input": {
+                "subject": "IL to MD NEXT DAY DLV",
+                "body": "AVAILABLE LOADS Contact me at 800-929-5863 or dj.jutze@allenlund.com EQP P/D PU Date PU Time Pickup City PU ST DEL Date DEL Time Delivery City DEL ST Total Miles Temp WGT 53VR 1/1 07/08/25 08:00 MORRIS, IL | DELIVERY: MD",
+                "threadId": "thread_022"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Morris, IL",
+                        "delivery": "MD",
+                        "route": "Morris, IL → MD",
+                        "threadId": "thread_022"
+                    }
+                ],
+                "broker": {
+                    "companyName": "Allen Lund Company",
+                    "email": "dj.jutze@allenlund.com"
+                },
+                "threadId": "thread_022",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "syracuse_to_hanover",
+            "input": {
+                "subject": "Load Opportunities: East Syracuse, NY to Hanover, PA",
+                "body": "Hello, Please let me know if you have a truck(s) in the area for the following shipment: Pickup: East Syracuse, NY 13057 : 07/07/2025 20:00 Delivery: Hanover, PA 17331 : 07/08/2025 10:00 Equipment Type \n\nITS Logistics\nNstratecons@its4logistics.com",
+                "threadId": "thread_023"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "East Syracuse, NY",
+                        "delivery": "Hanover, PA",
+                        "route": "East Syracuse, NY → Hanover, PA",
+                        "threadId": "thread_023"
+                    }
+                ],
+                "broker": {
+                    "companyName": "ITS Logistics",
+                    "email": "Nstratecons@its4logistics.com"
+                },
+                "threadId": "thread_023",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "maine_to_nj_loading",
+            "input": {
+                "subject": "Loading Today through Wednesday out of Maine , RI, VT or PA",
+                "body": "Do you have a truck for any of these? Available Loads: LOADING MONDAY 07/07/2025 Hollis Center, ME 04042 to Pennington, NJ 08534 Requires: Van / Reefer 45240 lbs Pickup: 9:00 PM appt Delivery: 07/08 7:",
+                "threadId": "thread_024"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Hollis Center, ME",
+                        "delivery": "Pennington, NJ",
+                        "route": "Hollis Center, ME → Pennington, NJ",
+                        "threadId": "thread_024"
+                    }
+                ],
+                "broker": {
+                    "email": ""
+                },
+                "threadId": "thread_024",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "available_tx_freight",
+            "input": {
+                "subject": "Available TX Freight",
+                "body": "Good morning! I was seeing if you had any available drivers - ACTIVE 07/07/25 08:00 07/08/25 08:00 DENTON TX PUEBLO CO FD ACTIVE 07/07/25 08:00 07/08/25 08:00 DENTON TX PUEBLO CO FD ACTIVE 07/07/25 08:",
+                "threadId": "thread_025"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "DENTON, TX",
+                        "delivery": "PUEBLO, CO",
+                        "route": "DENTON, TX → PUEBLO, CO",
+                        "threadId": "thread_025"
+                    }
+                ],
+                "broker": {},
+                "threadId": "thread_025",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "ky_to_tn",
+            "input": {
+                "subject": "KY to TN",
+                "body": "HAWESVILLE, KY to BROWNSVILLE, TN 24-hour shipper pick ready now for pick today or tomorrow Can deliver straight thru or next day Van only load with straps Product is 10 rolls of paper Weight is 44500",
+                "threadId": "thread_026"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Hawesville, KY",
+                        "delivery": "Brownsville, TN",
+                        "route": "Hawesville, KY → Brownsville, TN",
+                        "threadId": "thread_026"
+                    }
+                ],
+                "broker": {},
+                "threadId": "thread_026",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "dry_van_memphis_tn",
+            "input": {
+                "subject": "DRY VAN 53\" NEEDED MEMPHIS, TN",
+                "body": "Good morning, I was reaching out to see if you had any trucks available for today in the Memphis, TN area. I have a load available for a dry van picking up there headed to Virginia. ** Please reply all",
+                "threadId": "thread_027"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "spot",
+                "orders": [
+                    {
+                        "pickup": "Memphis, TN",
+                        "delivery": "VA",
+                        "route": "Memphis, TN → VA",
+                        "threadId": "thread_027"
+                    }
+                ],
+                "broker": {},
+                "threadId": "thread_027",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "wwex_gtz_van_opportunities",
+            "input": {
+                "subject": "WWEX-GTZ VAN load opportunities for Mon Jul 07",
+                "body": "Prepared for True Nation Inc. (DOT: 1978086) Monday July 07, 2025 Looking for a different load? Reply with what you're looking for, like: \"Any loads out of Tucson\" Preferred Lane These",
+                "threadId": "thread_028"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_028",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_insufficient_info",
+            "input": {
+                "subject": "Load inquiry",
+                "body": "Hi, do you have any trucks available? Let me know your rates.",
+                "threadId": "thread_029"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "Insufficient information - no pickup/delivery locations specified",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_029",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_spam_email",
+            "input": {
+                "subject": "URGENT: Claim your $1000 prize now!",
+                "body": "Congratulations! You've won $1000 in our monthly sweepstakes! Click here to claim your prize within 24 hours or it will be forfeited. This is not a scam!",
+                "threadId": "thread_030"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_030",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_incomplete_locations",
+            "input": {
+                "subject": "Shipment to West Coast",
+                "body": "Need a truck to pick up somewhere in the Midwest and deliver to the West Coast. Flexible on timing. Rate negotiable.\n\nContact: Mike\nPhone: 555-1234",
+                "threadId": "thread_031"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "Couldn't extract locations",
+                "orders": [],
+                "broker": {
+                    "fullName": "Mike",
+                    "phone": "555-1234"
+                },
+                "threadId": "thread_031",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_auto_reply",
+            "input": {
+                "subject": "Out of Office Auto-Reply",
+                "body": "Thank you for your email. I am currently out of the office and will return on Monday. For urgent matters, please contact my colleague at support@company.com.",
+                "threadId": "thread_032"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_032",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_internal_communication",
+            "input": {
+                "subject": "Team Meeting Tomorrow",
+                "body": "Reminder: We have our weekly team meeting tomorrow at 2 PM in the conference room. Please bring your quarterly reports.\n\nBest,\nSarah",
+                "threadId": "thread_033"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_033",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_vendor_invoice",
+            "input": {
+                "subject": "Invoice #12345 - Office Supplies",
+                "body": "Please find attached invoice #12345 for office supplies delivered last week. Payment is due within 30 days.\n\nAccounts Receivable\nOffice Supply Co.",
+                "threadId": "thread_034"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_034",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "unclassified_technical_support",
+            "input": {
+                "subject": "Technical Support Request #789",
+                "body": "We're experiencing issues with our dispatch software. The system keeps crashing when we try to generate reports. Can you please assist?\n\nIT Department",
+                "threadId": "thread_035"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "unclassified",
+                "unclassificationReason": "This might be unrelated email",
+                "orders": [],
+                "broker": {},
+                "threadId": "thread_035",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_weekly_dedicated_route",
+            "input": {
+                "subject": "Weekly Dedicated Lane - Chicago to Detroit",
+                "body": "We have a dedicated weekly lane available starting next Monday:\n\nRoute: Chicago, IL to Detroit, MI\nFrequency: Every Monday\nDuration: 6 months minimum\nRate: $650 per load\nEquipment: 53ft dry van\n\nContact:\nMark Thompson\nMidwest Logistics\nMC: 654321\nmark@midwestlogistics.com\n(312) 555-0123",
+                "threadId": "thread_036"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Chicago, IL",
+                        "delivery": "Detroit, MI",
+                        "route": "Chicago, IL → Detroit, MI",
+                        "offeringRate": 650.0,
+                        "threadId": "thread_036"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "654321",
+                    "fullName": "Mark Thompson",
+                    "companyName": "Midwest Logistics",
+                    "email": "mark@midwestlogistics.com",
+                    "phone": "(312) 555-0123"
+                },
+                "threadId": "thread_036",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_daily_recurring_automotive",
+            "input": {
+                "subject": "Daily Automotive Lane - Detroit to Atlanta",
+                "body": "Seeking reliable carrier for daily automotive parts lane:\n\n• Pickup: Detroit, MI (Ford Plant)\n• Delivery: Atlanta, GA (Assembly Plant)\n• Schedule: Monday through Friday\n• Time: 6 AM pickup, next day 8 AM delivery\n• Rate: $1,200 per load\n• Contract: 12 months\n• Special requirements: Automotive certified carrier\n\nPlease respond with:\n- MC number\n- Insurance certificates\n- Automotive certifications\n\nContact: Jennifer Walsh\nAutomotive Logistics Corp\nMC: 887766\njennifer.walsh@autolog.com\n(248) 555-7890",
+                "threadId": "thread_037"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Atlanta, GA",
+                        "route": "Detroit, MI → Atlanta, GA",
+                        "offeringRate": 1200.0,
+                        "threadId": "thread_037"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "887766",
+                    "fullName": "Jennifer Walsh",
+                    "companyName": "Automotive Logistics Corp",
+                    "email": "jennifer.walsh@autolog.com",
+                    "phone": "(248) 555-7890"
+                },
+                "threadId": "thread_037",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_bi_weekly_food_grade",
+            "input": {
+                "subject": "Bi-Weekly Food Grade Lane Opportunity",
+                "body": "Food grade lane opportunity available:\n\nPickup: Sacramento, CA\nDelivery: Phoenix, AZ\nFrequency: Every other Tuesday\nStart Date: Next week\nDuration: 6 months with option to extend\nRate: $875 per load\nRequirements:\n- Food grade trailer\n- HACCP certification\n- Temperature controlled\n\nDan Rodriguez\nFresh Foods Transport\nMC: 445566\ndan@freshfoodstransport.com\n(916) 555-4567\nwww.freshfoodstransport.com",
+                "threadId": "thread_038"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Sacramento, CA",
+                        "delivery": "Phoenix, AZ",
+                        "route": "Sacramento, CA → Phoenix, AZ",
+                        "offeringRate": 875.0,
+                        "threadId": "thread_038"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "445566",
+                    "fullName": "Dan Rodriguez",
+                    "companyName": "Fresh Foods Transport",
+                    "email": "dan@freshfoodstransport.com",
+                    "phone": "(916) 555-4567",
+                    "website": "www.freshfoodstransport.com"
+                },
+                "threadId": "thread_038",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_roundtrip_manufacturing",
+            "input": {
+                "subject": "Round-trip Manufacturing Lane",
+                "body": "Manufacturing lane with guaranteed round-trip loads:\n\nOutbound: Portland, OR to Denver, CO\nInbound: Denver, CO to Portland, OR\nFrequency: Twice weekly (Tuesday & Friday)\nRate: $1,400 outbound / $1,300 inbound\nTotal per round trip: $2,700\nProduct: Manufacturing equipment and parts\nSpecial notes: Some loads require tarps\n\nThis is a long-term contract opportunity with a Fortune 500 manufacturer.\n\nRobert Chen\nPacific Manufacturing Logistics\nMC: 332211\nrobert.chen@pacmanlog.com\n(503) 555-2468",
+                "threadId": "thread_040"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Portland, OR",
+                        "delivery": "Denver, CO",
+                        "route": "Portland, OR → Denver, CO",
+                        "offeringRate": 1400.0,
+                        "threadId": "thread_040"
+                    },
+                    {
+                        "pickup": "Denver, CO",
+                        "delivery": "Portland, OR",
+                        "route": "Denver, CO → Portland, OR",
+                        "offeringRate": 1300.0,
+                        "threadId": "thread_040"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "332211",
+                    "fullName": "Robert Chen",
+                    "companyName": "Pacific Manufacturing Logistics",
+                    "email": "robert.chen@pacmanlog.com",
+                    "phone": "(503) 555-2468"
+                },
+                "threadId": "thread_040",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "lane_monthly_project_freight",
+            "input": {
+                "subject": "Monthly Project Freight Lane - Construction Equipment",
+                "body": "Project freight lane for construction equipment:\n\nOrigin: Minneapolis, MN\nDestination: Various job sites in North Dakota\nFrequency: 4-6 loads per month\nDuration: 18 months (major infrastructure project)\nAverage rate: $950 per load\nEquipment required: Flatbed with tarps\nWeight range: 35,000 - 48,000 lbs\n\nNote: Delivery locations vary but all within 50-mile radius of Fargo, ND\nSome loads may require escort vehicles (we handle permits)\n\nProject starts next month. Looking for dedicated carrier.\n\nContact:\nSteve Johnson\nConstruction Logistics Solutions\nMC: 998877\nsteve.johnson@constlogistics.com\n(612) 555-8901",
+                "threadId": "thread_041"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane",
+                "orders": [
+                    {
+                        "pickup": "Minneapolis, MN",
+                        "delivery": "Fargo, ND",
+                        "route": "Minneapolis, MN → Fargo, ND",
+                        "offeringRate": 950.0,
+                        "threadId": "thread_041"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "998877",
+                    "fullName": "Steve Johnson",
+                    "companyName": "Construction Logistics Solutions",
+                    "email": "steve.johnson@constlogistics.com",
+                    "phone": "(612) 555-8901"
+                },
+                "threadId": "thread_041",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_lane_immediate_and_weekly",
+            "input": {
+                "subject": "Immediate Load + Weekly Lane Opportunity",
+                "body": "We have both immediate and ongoing opportunities:\n\n**SPOT LOAD - URGENT:**\nPickup: Atlanta, GA - TODAY by 3 PM\nDelivery: Charlotte, NC - Tomorrow by 10 AM\nRate: $550\nWeight: 38,000 lbs\nCommodity: Auto parts\n\n**WEEKLY LANE:**\nSame route: Atlanta, GA to Charlotte, NC\nEvery Tuesday starting next week\nRate: $525 per load\n12-month contract available\n\nBoth loads require dry van equipment.\n\nContact: Mike Wilson\nSoutheast Transport Solutions\nMC: 445577\nmike.wilson@setransport.com\n(404) 555-7890",
+                "threadId": "thread_042"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Atlanta, GA",
+                        "delivery": "Charlotte, NC",
+                        "route": "Atlanta, GA → Charlotte, NC",
+                        "offeringRate": 550.0,
+                        "threadId": "thread_042"
+                    },
+                    {
+                        "pickup": "Atlanta, GA",
+                        "delivery": "Charlotte, NC",
+                        "route": "Atlanta, GA → Charlotte, NC",
+                        "offeringRate": 525.0,
+                        "threadId": "thread_042"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "445577",
+                    "fullName": "Mike Wilson",
+                    "companyName": "Southeast Transport Solutions",
+                    "email": "mike.wilson@setransport.com",
+                    "phone": "(404) 555-7890"
+                },
+                "threadId": "thread_042",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_lane_seasonal_opportunity",
+            "input": {
+                "subject": "Seasonal Freight - Immediate + Ongoing",
+                "body": "Seasonal produce opportunity with immediate and long-term potential:\n\n**IMMEDIATE SPOT LOADS (This Week):**\n• Salinas, CA to Chicago, IL - $2,800 (Wednesday pickup)\n• Salinas, CA to Atlanta, GA - $2,650 (Thursday pickup)\n• Salinas, CA to New York, NY - $3,200 (Friday pickup)\n\n**SEASONAL LANE (4 months):**\nOrigin: Salinas, CA\nDestinations: Various East Coast cities\nFrequency: 5-8 loads per week\nAverage rate: $2,750 per load\nSeason: March through June\nCommodity: Fresh produce\n\nRequirements:\n- Reefer trailer\n- Produce experience preferred\n- PACA bond\n\nThis is a high-volume account with potential for year-round work.\n\nContact:\nTom Garcia\nWest Coast Produce Logistics\nMC: 556677\ntom.garcia@wcproduce.com\n(831) 555-6789",
+                "threadId": "thread_044"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Salinas, CA",
+                        "delivery": "Chicago, IL",
+                        "route": "Salinas, CA → Chicago, IL",
+                        "offeringRate": 2800.0,
+                        "threadId": "thread_044"
+                    },
+                    {
+                        "pickup": "Salinas, CA",
+                        "delivery": "Atlanta, GA",
+                        "route": "Salinas, CA → Atlanta, GA",
+                        "offeringRate": 2650.0,
+                        "threadId": "thread_044"
+                    },
+                    {
+                        "pickup": "Salinas, CA",
+                        "delivery": "New York, NY",
+                        "route": "Salinas, CA → New York, NY",
+                        "offeringRate": 3200.0,
+                        "threadId": "thread_044"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "556677",
+                    "fullName": "Tom Garcia",
+                    "companyName": "West Coast Produce Logistics",
+                    "email": "tom.garcia@wcproduce.com",
+                    "phone": "(831) 555-6789"
+                },
+                "threadId": "thread_044",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_lane_retail_distribution",
+            "input": {
+                "subject": "Retail Distribution - Spot & Dedicated Options",
+                "body": "Retail account with both spot and dedicated opportunities:\n\n📦 SPOT LOADS AVAILABLE NOW:\n1. Phoenix, AZ → Denver, CO ($950) - Pickup Monday\n2. Phoenix, AZ → Salt Lake City, UT ($750) - Pickup Tuesday  \n3. Phoenix, AZ → Las Vegas, NV ($400) - Pickup Wednesday\n\n🚛 DEDICATED LANE STARTING NEXT MONTH:\nPhoenix, AZ Distribution Center to Southwest Region\nPrimary destinations:\n- Albuquerque, NM (weekly) - $650\n- Tucson, AZ (bi-weekly) - $250\n- El Paso, TX (weekly) - $800\n\nTotal weekly potential: $1,700+\nContract length: 24 months\nEquipment: 53ft dry van with lift gate\n\nExcellent opportunity to build relationship with major retailer.\n\nContact Information:\nJessica Lee\nSouthwest Retail Logistics\nMC: 889900\njessica.lee@swretaillog.com\n(602) 555-3456",
+                "threadId": "thread_045"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Denver, CO",
+                        "route": "Phoenix, AZ → Denver, CO",
+                        "offeringRate": 950.0,
+                        "threadId": "thread_045"
+                    },
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Salt Lake City, UT",
+                        "route": "Phoenix, AZ → Salt Lake City, UT",
+                        "offeringRate": 750.0,
+                        "threadId": "thread_045"
+                    },
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Las Vegas, NV",
+                        "route": "Phoenix, AZ → Las Vegas, NV",
+                        "offeringRate": 400.0,
+                        "threadId": "thread_045"
+                    },
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Albuquerque, NM",
+                        "route": "Phoenix, AZ → Albuquerque, NM",
+                        "offeringRate": 650.0,
+                        "threadId": "thread_045"
+                    },
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "Tucson, AZ",
+                        "route": "Phoenix, AZ → Tucson, AZ",
+                        "offeringRate": 250.0,
+                        "threadId": "thread_045"
+                    },
+                    {
+                        "pickup": "Phoenix, AZ",
+                        "delivery": "El Paso, TX",
+                        "route": "Phoenix, AZ → El Paso, TX",
+                        "offeringRate": 800.0,
+                        "threadId": "thread_045"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "889900",
+                    "fullName": "Jessica Lee",
+                    "companyName": "Southwest Retail Logistics",
+                    "email": "jessica.lee@swretaillog.com",
+                    "phone": "(602) 555-3456"
+                },
+                "threadId": "thread_045",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_lane_manufacturing_partnership",
+            "input": {
+                "subject": "Manufacturing Partnership - Immediate & Long-term",
+                "body": "Partnership opportunity with major manufacturer:\n\n🔥 URGENT SPOT LOADS (This Week):\n• Cleveland, OH to Nashville, TN - $850 (today)\n• Cleveland, OH to Birmingham, AL - $950 (tomorrow)\n• Cleveland, OH to Memphis, TN - $775 (Thursday)\nAll loads: Manufacturing equipment, 42-45k lbs\n\n⚡ DEDICATED MANUFACTURING LANE:\nOrigin: Cleveland, OH Manufacturing Plant\nPrimary Route: Cleveland, OH to Nashville, TN\nFrequency: 2x weekly (Tuesday/Friday)\nRate: $825 per load\nContract: 18 months with 6-month extension option\nProduct: Industrial machinery and parts\n\nAdditional Benefits:\n- Consistent backhaul opportunities\n- Fuel card program\n- Quarterly rate reviews\n- Priority booking for spot loads\n\nLooking for reliable carrier to grow with our expanding operations.\n\nDirect Contact:\nBrad Thompson\nIndustrial Manufacturing Logistics\nMC: 112233\nbrad.thompson@indmanlog.com\n(216) 555-8765",
+                "threadId": "thread_046"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Cleveland, OH",
+                        "delivery": "Nashville, TN",
+                        "route": "Cleveland, OH → Nashville, TN",
+                        "offeringRate": 850.0,
+                        "threadId": "thread_046"
+                    },
+                    {
+                        "pickup": "Cleveland, OH",
+                        "delivery": "Birmingham, AL",
+                        "route": "Cleveland, OH → Birmingham, AL",
+                        "offeringRate": 950.0,
+                        "threadId": "thread_046"
+                    },
+                    {
+                        "pickup": "Cleveland, OH",
+                        "delivery": "Memphis, TN",
+                        "route": "Cleveland, OH → Memphis, TN",
+                        "offeringRate": 775.0,
+                        "threadId": "thread_046"
+                    },
+                    {
+                        "pickup": "Cleveland, OH",
+                        "delivery": "Nashville, TN",
+                        "route": "Cleveland, OH → Nashville, TN",
+                        "offeringRate": 825.0,
+                        "threadId": "thread_046"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "112233",
+                    "fullName": "Brad Thompson",
+                    "companyName": "Industrial Manufacturing Logistics",
+                    "email": "brad.thompson@indmanlog.com",
+                    "phone": "(216) 555-8765"
+                },
+                "threadId": "thread_046",
+                "applicationName": "test-app"
+            }
+        },
+        {
+            "test_name": "spot_lane_automotive_mixed",
+            "input": {
+                "subject": "Automotive Freight - Mixed Opportunities",
+                "body": "Automotive account with immediate and recurring needs:\n\n🚗 IMMEDIATE AUTOMOTIVE LOADS:\nLoad 1: Detroit, MI → Louisville, KY\nRate: $650 | Pickup: Tomorrow 6 AM\nCommodity: Auto parts\n\nLoad 2: Detroit, MI → Nashville, TN  \nRate: $725 | Pickup: Wednesday 8 AM\nCommodity: Engine components\n\n🏭 RECURRING AUTOMOTIVE LANE:\nManufacturing Plant Route\nDetroit, MI to Multiple Southern Plants:\n- Montgomery, AL (weekly) $850\n- Chattanooga, TN (bi-weekly) $700\n- Jackson, MS (monthly) $950\n\nLane Benefits:\n- Guaranteed minimum 8 loads per month\n- Automotive certification provided\n- Dedicated dispatch support\n- 12-month contract with auto-renewal\n\nRequirements:\n- Clean driving record\n- Automotive experience preferred\n- On-time delivery critical\n\nThis account has grown 40% year-over-year.\n\nContact:\nAngie Martinez\nAutomotive Supply Chain Solutions\nMC: 334455\nangie.martinez@autosupply.com\n(313) 555-9012",
+                "threadId": "thread_047"
+            },
+            "application_name": "test-app",
+            "expected_output": {
+                "orderType": "lane-spot",
+                "orders": [
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Louisville, KY",
+                        "route": "Detroit, MI → Louisville, KY",
+                        "offeringRate": 650.0,
+                        "threadId": "thread_047"
+                    },
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Nashville, TN",
+                        "route": "Detroit, MI → Nashville, TN",
+                        "offeringRate": 725.0,
+                        "threadId": "thread_047"
+                    },
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Montgomery, AL",
+                        "route": "Detroit, MI → Montgomery, AL",
+                        "offeringRate": 850.0,
+                        "threadId": "thread_047"
+                    },
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Chattanooga, TN",
+                        "route": "Detroit, MI → Chattanooga, TN",
+                        "offeringRate": 700.0,
+                        "threadId": "thread_047"
+                    },
+                    {
+                        "pickup": "Detroit, MI",
+                        "delivery": "Jackson, MS",
+                        "route": "Detroit, MI → Jackson, MS",
+                        "offeringRate": 950.0,
+                        "threadId": "thread_047"
+                    }
+                ],
+                "broker": {
+                    "mcNumber": "334455",
+                    "fullName": "Angie Martinez",
+                    "companyName": "Automotive Supply Chain Solutions",
+                    "email": "angie.martinez@autosupply.com",
+                    "phone": "(313) 555-9012"
+                },
+                "threadId": "thread_047",
+                "applicationName": "test-app"
+            }
+        }
+    ]
+}
